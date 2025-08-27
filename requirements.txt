@@ -1,0 +1,12 @@
+# Create the environment for 3.10: "python3.10 -m venv .venv"
+numpy<1.24,>=1.23
+scipy<1.13
+open3d
+matplotlib
+pandas
+plotly
+torch
+setuptools>=65
+pc-skeletor
+plyfile
+networkx
