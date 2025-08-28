@@ -10,3 +10,4 @@ setuptools>=65
 pc-skeletor
 plyfile
 networkx
+seaborn
