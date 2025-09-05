@@ -1,0 +1,15 @@
+services:
+  sapling_nerf:
+    container_name: sapling_nerf_container
+    build:
+      context: ..
+      dockerfile: .docker/Dockerfile
+      args:
+        - UID=${UID}
+        - GID=${GID}
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    runtime: nvidia
+    network_mode: "host"
+    tty: true
