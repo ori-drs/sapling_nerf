@@ -37,6 +37,15 @@ pip install -e .
 
 ---
 
+## 🐳 Docker
+
+The Docker setup contains installing dependencies for nerfstudio.
+
+```bash
+docker compose -f .docker/docker_compose.yml run --build sapling_nerf
+```
+---
+
 ## ⚙️ Configuration
 
 Edit the file `config/config.yaml` with your paths and parameters:
