@@ -29,6 +29,14 @@ for i in {1..8}; do
   eval $export_cmd  
 
   # rename the exported point cloud
-  mv /home/docker_dev/oxford_spires_dataset/ns_export/point_cloud.ply /home/docker_dev/oxford_spires_dataset/ns_export/sapling-0${i}.ply
+  mv /home/docker_dev/saplings_nerf/ns_export/point_cloud.ply /home/docker_dev/saplings_nerf/ns_export/sapling-0${i}.ply
+
+  # run nvs eval
+    nvs_cmd="ns-eval \
+        --load-config ${latest_run}/config.yml \
+        --output-path /home/docker_dev/saplings_nerf/eval_nvs/sapling-0${i}.json \
+        --render-output-path /home/docker_dev/saplings_nerf/eval_render/sapling-0${i}"
+    echo -e "\033[1;36mRunning:\033[0m $nvs_cmd"
+    eval $nvs_cmd
 done
 
