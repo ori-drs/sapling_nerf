@@ -32,15 +32,15 @@ RUN python -m pip install --no-cache-dir git+https://github.com/NVlabs/tiny-cuda
 
 ARG GID
 ARG UID
+ARG DOCKER_WORKDIR
+
 ENV UNAME=docker_dev
 RUN addgroup --gid $GID $UNAME
 RUN adduser --disabled-password --gecos '' --uid $UID --gid $GID $UNAME
-
-ARG SAPLINGS_NERF_DIR=/home/docker_dev/saplings_nerf
-WORKDIR ${SAPLINGS_NERF_DIR}
+WORKDIR ${DOCKER_WORKDIR}
 
 RUN pip install nerfstudio==1.1.4
-RUN chown -R ${UID}:${GID} ${SAPLINGS_NERF_DIR}/
+RUN chown -R ${UID}:${GID} ${DOCKER_WORKDIR}/
 USER ${UNAME}
 RUN echo "PS1='${debian_chroot:+($debian_chroot)}\[\033[01;33m\]\u@docker-\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '" >> ~/.bashrc
 
