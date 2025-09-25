@@ -1,11 +1,11 @@
-input_folder: /home/miguelangel/exports/pcd/
-output_folder: /home/miguelangel/exports/output/sapling-01/
-input_file: 2025-07-11-tree-01.pcd
+input_folder: /home/miguelangel/exports/pcd
+output_folder: /home/miguelangel/exports/output/sapling-03-nerf/
+input_file: 2025-08-14-sapling-03.pcd
 
 down_sample: 0.001 # For skeletonisation
-radius: 0.008 # For leaf segmentation
+radius: 0.012 # For leaf segmentation
 
-run_skeleton: false
-run_leaf_nodes: false
-run_leaf_region: false
+run_skeleton: true
+run_leaf_nodes: true
+run_leaf_region: true
 run_density_plot: true

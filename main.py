@@ -26,6 +26,7 @@ if run_skeleton:
     skeleton_file, topology_file = extract_skeleton(input_folder, output_folder, input_file, down_sample)
 else:
     topology_file = os.path.join(output_folder, f"topology-{input_file.replace('.pcd', '.ply')}")
+    skeleton_file = os.path.join(output_folder, f"skeleton-{input_file.replace('.pcd', '.pcd')}")
 
 # Step 2: Detect leaf nodes from topology
 if run_leaf_nodes:
@@ -39,9 +40,10 @@ if run_leaf_region:
         os.path.join(input_folder, input_file), leaf_nodes_file, output_folder, radius)
 else:
     leaf_region_file = os.path.join(output_folder, f"leaf-region-{input_file.replace('.pcd', '')}.pcd")
+    rest_region_file = os.path.join(output_folder, f"rest-region-{input_file.replace('.pcd', '')}.pcd")
 
 # Step 4: Plot density distribution
 if run_density_plot:
-    plot_leaf_density(leaf_region_file, output_folder)
+    plot_leaf_density(leaf_region_file, rest_region_file, output_folder)
 
 print("\nPipeline complete.")
