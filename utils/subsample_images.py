@@ -29,8 +29,8 @@ def copy_image_each_n(src_dir, dst_dir, n):
 # Main execution block
 if __name__ == "__main__":
     
-    src_dir = "/home/miguelangel/data/nerf-logs/2025-08-14-wytham-full/sapling-08/raw/images/cam1/"
-    dst_dir = "/home/miguelangel/data/nerf-logs/2025-08-14-wytham/sapling-08/raw/images/cam1/"
-    n = 3  
+    src_dir = "/home/miguelangel/data/nerf-logs/2025-12-03-wytham/sapling-02/raw/images/cam1-full/"
+    dst_dir = "/home/miguelangel/data/nerf-logs/2025-12-03-wytham/sapling-02/raw/images/cam1/"
+    n = 2
     
     copy_image_each_n(src_dir, dst_dir, n)

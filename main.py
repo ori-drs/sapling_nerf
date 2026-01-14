@@ -6,6 +6,7 @@ from saplings_nerf.skeleton_extraction import extract_skeleton
 from saplings_nerf.leaf_node_detection import detect_leaf_nodes
 from saplings_nerf.leaf_region_segmentation import segment_leaf_region
 from saplings_nerf.density_analysis import plot_leaf_density
+from saplings_nerf.bifurcations import count_bifurcations_from_ply
 
 # Load configuration
 with open("config/config.yaml", "r") as f:
@@ -45,5 +46,7 @@ else:
 # Step 4: Plot density distribution
 if run_density_plot:
     plot_leaf_density(leaf_region_file, rest_region_file, output_folder)
+    n_bif = count_bifurcations_from_ply(topology_file)
+    print("Bifurcations:", n_bif)
 
 print("\nPipeline complete.")

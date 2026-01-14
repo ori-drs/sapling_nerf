@@ -1,6 +1,6 @@
 input_folder: /home/miguelangel/exports/pcd
-output_folder: /home/miguelangel/exports/output/sapling-03-nerf/
-input_file: 2025-08-14-sapling-03.pcd
+output_folder: /home/miguelangel/exports/output/sapling-01-december/
+input_file: 2025-12-03-sapling-01.pcd
 
 down_sample: 0.001 # For skeletonisation
 radius: 0.012 # For leaf segmentation
