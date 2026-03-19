@@ -8,9 +8,9 @@ output_folder: /home/miguelangel/oxford-lab/labrobotics/nerf-outputs/exports/out
 down_sample: 0.001 # Pc-skeletor parameter: 
                    # 0.008 produce light PC for accurate skeleton 
                    # 0.001 produce dense PC for overskeletonisation (segmentation purposes)
-radius: 0.008 # For leaf segmentation around terminal nodes
+radius: 0.012 # For leaf segmentation around terminal nodes
 
 run_skeleton: false
-run_leaf_nodes: true
-run_leaf_region: false
+run_leaf_nodes: false
+run_leaf_region: true
 run_density_plot: false

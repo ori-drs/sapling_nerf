@@ -103,13 +103,9 @@ class SaplingAnalysisPipeline:
                 detect_leaf_nodes(self.topology_file, self.leaf_nodes_file)
 
         # Step 3: Leaf Region Segmentation 
-        if self.run_leaf_region:
-            if self._check_file_exists(leaf_nodes_file, "Leaf Node Step"):
+        if self.run_leaf_region and self._check_file_exists(self.leaf_nodes_file, "Leaf Segmentation Step"):
                 self.logger.info("Segmenting leaf regions...")
-                leaf_region_file, rest_region_file = segment_leaf_region(
-                    self.full_input_path, leaf_nodes_file, self.output_folder, self.radius
-                )
-            
+                segment_leaf_region(self.full_input_path, self.leaf_nodes_file, self.leaf_region_file, self.rest_region_file, self.radius)
 
         # Step 4: Density Analysis 
         if self.run_density_plot:

@@ -1,10 +1,15 @@
-# saplings_nerf/leaf_region_segmentation.py
-
 import open3d as o3d
 import numpy as np
 import os
 
-def segment_leaf_region(full_pcd_path, leaf_nodes_path, output_path, radius):
+def segment_leaf_region(full_pcd_path, leaf_nodes_path, leaf_region_out, rest_region_out, radius):
+    """
+    Segment as leaf points the region around terminal nodes in the topology graph. 
+    This allows leaf-wood separation.
+        - Inputs: paths to files.
+        - Outputs: leaf and wood regions saved to file.
+    """
+
     original_pcd = o3d.io.read_point_cloud(full_pcd_path)
     original_points = np.asarray(original_pcd.points)
 
@@ -23,16 +28,12 @@ def segment_leaf_region(full_pcd_path, leaf_nodes_path, output_path, radius):
     rest_region = original_pcd.select_by_index(np.where(mask)[0], invert=True)
 
     leaf_region.paint_uniform_color([0.1, 0.8, 0.1])
-    rest_region.paint_uniform_color([0.5, 0.5, 0.5])
+    rest_region.paint_uniform_color([0.588, 0.294, 0.0])
 
-    base_name = os.path.basename(full_pcd_path).replace('.pcd', '')
-    leaf_out = os.path.join(output_path, f"leaf-region-{base_name}.pcd")
-    rest_out = os.path.join(output_path, f"rest-region-{base_name}.pcd")
+    o3d.io.write_point_cloud(leaf_region_out, leaf_region)
+    o3d.io.write_point_cloud(rest_region_out, rest_region)
 
-    o3d.io.write_point_cloud(leaf_out, leaf_region)
-    o3d.io.write_point_cloud(rest_out, rest_region)
+    print(f"Saved leaf region to: {leaf_region_out}")
+    print(f"Saved rest region to: {rest_region_out}")
 
-    print(f"Saved leaf region to: {leaf_out}")
-    print(f"Saved rest region to: {rest_out}")
-
-    return leaf_out, rest_out
+    return
