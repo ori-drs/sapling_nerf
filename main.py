@@ -93,16 +93,14 @@ class SaplingAnalysisPipeline:
         self.logger.info(f"Starting pipeline for: {self.input_file}")
 
         # Step 1: Skeleton Extraction 
-        if self.run_skeleton and self._check_file_exists(self.full_input_path, "Skeleton Step"):
+        if self.run_skeleton and self._check_file_exists(self.full_input_path, "Skeleton-Topology Step"):
                 self.logger.info("Extracting skeleton...")
                 extract_skeleton(self.full_input_path, self.output_folder, self.skeleton_file, self.topology_file, self.down_sample)
             
         # Step 2: Leaf Node Detection 
-        if self.run_leaf_nodes:
-            if self._check_file_exists(topology_file, "Skeleton-Topology Step"):
+        if self.run_leaf_nodes and self._check_file_exists(self.topology_file, "Leaf Node Step"):
                 self.logger.info("Detecting leaf nodes...")
-                leaf_nodes_file = detect_leaf_nodes(topology_file, self.output_folder)
-            
+                detect_leaf_nodes(self.topology_file, self.leaf_nodes_file)
 
         # Step 3: Leaf Region Segmentation 
         if self.run_leaf_region:
