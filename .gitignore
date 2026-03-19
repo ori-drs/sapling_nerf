@@ -3,3 +3,4 @@ saplings_nerf.egg-info/
 build
 .venv/
 *.ply
+*.log

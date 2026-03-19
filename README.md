@@ -1,22 +1,24 @@
-# Saplings NeRF Segmentation Pipeline
+# Sapling-NeRF Analysis Pipeline
 
-This project contains a complete pipeline for segmenting the skeleton and leaf regions in point clouds of young trees.
+This project contains a complete pipeline for structural analysis of sapling trees. It handles skeleton extraction, leaf segmentation, and density and topology analysis. To avoid repeating processes when not necessary, the pipeline is divided into steps, generating files with predefined names in between.
 
 ---
 
 ## 📁 Project Structure
 
 ```
-saplings_nerf/               # Python module with segmentation functions
+saplings_nerf/               # Python module with analisys and segmentation functions
 ├── __init__.py
-├── skeleton_extraction.py
+├── bifurcations.py
+├── density_analysis.py
 ├── leaf_node_detection.py
 ├── leaf_region_segmentation.py
+├── skeleton_extraction.py
 config/
 ├── config.yaml              # Editable configuration file
 main.py                      # Main execution script
 requirements.txt             # Dependencies
-setup.py                     # Optional package installer
+setup.py                     # Package installer
 ```
 
 ---

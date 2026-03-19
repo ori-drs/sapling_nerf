@@ -1,52 +1,128 @@
-# main.py
+"""
+Sapling-NeRF Analysis Pipeline
+Author: Miguel Angel Munoz-Banon
+Description: 
+    Pipeline for structural analysis of sapling trees.
+    It Handles skeleton extraction, leaf segmentation, and density and topology analysis. 
+    To avoid repeating processes when not necessary, the pipeline is divided into steps, 
+    generating files with conventional names in between.
+"""
 
 import yaml
 import os
+import sys
+import logging
+from datetime import datetime
 from saplings_nerf.skeleton_extraction import extract_skeleton
 from saplings_nerf.leaf_node_detection import detect_leaf_nodes
 from saplings_nerf.leaf_region_segmentation import segment_leaf_region
 from saplings_nerf.density_analysis import plot_leaf_density
 from saplings_nerf.bifurcations import count_bifurcations_from_ply
 
-# Load configuration
-with open("config/config.yaml", "r") as f:
-    config = yaml.safe_load(f)
+class SaplingAnalysisPipeline:
+    def __init__(self, config_path="config/config.yaml"):
+        # Setup logging first
+        self._setup_logging()
+        
+        # Load and validate configuration
+        self.config = self._load_config(config_path)
+        self._validate_initial_paths()
+        
+        # Mapping config to attributes 
+        self.input_folder = self.config["input_folder"]
+        self.output_folder = self.config["output_folder"]
+        self.input_file = self.config["input_file"]
+        self._file_names_convention()
+        
+        self.down_sample = self.config.get("down_sample", 0.001)
+        self.radius = self.config.get("radius", 0.008)
+        
+        # Run flags 
+        self.run_skeleton = self.config.get("run_skeleton", True)
+        self.run_leaf_nodes = self.config.get("run_leaf_nodes", True)
+        self.run_leaf_region = self.config.get("run_leaf_region", True)
+        self.run_density_plot = self.config.get("run_density_plot", True)
 
-input_folder = config["input_folder"]
-output_folder = config["output_folder"]
-input_file = config["input_file"]
-down_sample = config.get("down_sample", 0.001)
-radius = config.get("radius", 0.008)
-run_skeleton = config.get("run_skeleton", True)
-run_leaf_nodes = config.get("run_leaf_nodes", True)
-run_leaf_region = config.get("run_leaf_region", True)
-run_density_plot = config.get("run_density_plot", True)
+    def _setup_logging(self):
+        """Initializes logging to both console and a file."""
+        log_format = "%(asctime)s [%(levelname)s] %(message)s"
+        logging.basicConfig(
+            level=logging.INFO,
+            format=log_format,
+            handlers=[
+                # logging.FileHandler(f"log_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"),
+                logging.FileHandler(f"log.log"),
+                logging.StreamHandler(sys.stdout)
+            ]
+        )
+        self.logger = logging.getLogger(__name__)
 
-# Step 1: Extract skeleton and topology
-if run_skeleton:
-    skeleton_file, topology_file = extract_skeleton(input_folder, output_folder, input_file, down_sample)
-else:
-    topology_file = os.path.join(output_folder, f"topology-{input_file.replace('.pcd', '.ply')}")
-    skeleton_file = os.path.join(output_folder, f"skeleton-{input_file.replace('.pcd', '.pcd')}")
+    def _load_config(self, path):
+        """Load YAML config with error handling."""
+        if not os.path.exists(path):
+            self.logger.error(f"Configuration file missing: {path}")
+            sys.exit(1)
+        with open(path, "r") as f:
+            return yaml.safe_load(f)
 
-# Step 2: Detect leaf nodes from topology
-if run_leaf_nodes:
-    leaf_nodes_file = detect_leaf_nodes(topology_file, output_folder)
-else:
-    leaf_nodes_file = os.path.join(output_folder, "leaf-nodes.pcd")
+    def _validate_initial_paths(self):
+        """Verifies input existence before starting."""
+        if not os.path.exists(self.config["output_folder"]):
+            self.logger.info(f"Creating output directory: {self.config['output_folder']}")
+            os.makedirs(self.config["output_folder"], exist_ok=True)
+    
+    def _file_names_convention(self):
+        self.full_input_path = os.path.join(self.input_folder, self.input_file)
+        self.topology_file = os.path.join(self.output_folder, f"topology-{self.input_file.replace('.pcd', '.ply')}")
+        self.skeleton_file = os.path.join(self.output_folder, f"skeleton-{self.input_file.replace('.pcd', '.pcd')}") 
+        pcd_base = self.input_file.replace('.pcd', '')
+        self.leaf_nodes_file = os.path.join(self.output_folder, f"leaf-nodes-{pcd_base}.pcd")
+        self.leaf_region_file = os.path.join(self.output_folder, f"leaf-region-{pcd_base}.pcd")
+        self.rest_region_file = os.path.join(self.output_folder, f"rest-region-{pcd_base}.pcd")
 
-# Step 3: Segment leaf region from full point cloud
-if run_leaf_region:
-    leaf_region_file, rest_region_file = segment_leaf_region(
-        os.path.join(input_folder, input_file), leaf_nodes_file, output_folder, radius)
-else:
-    leaf_region_file = os.path.join(output_folder, f"leaf-region-{input_file.replace('.pcd', '')}.pcd")
-    rest_region_file = os.path.join(output_folder, f"rest-region-{input_file.replace('.pcd', '')}.pcd")
+    def _check_file_exists(self, filepath, step_name):
+        """Helper to verify internal files exist before proceeding to next step."""
+        if not os.path.exists(filepath):
+            self.logger.error(f"[{step_name}] Expected file missing: {filepath}")
+            self.logger.error(f"[{step_name}] Step skipped")
+            return False
+        return True
 
-# Step 4: Plot density distribution
-if run_density_plot:
-    plot_leaf_density(leaf_region_file, rest_region_file, output_folder)
-    n_bif = count_bifurcations_from_ply(topology_file)
-    print("Bifurcations:", n_bif)
+    def run(self):
+        """Executes the analysis pipeline steps."""
+        self.logger.info(f"Starting pipeline for: {self.input_file}")
 
-print("\nPipeline complete.")
+        # Step 1: Skeleton Extraction 
+        if self.run_skeleton and self._check_file_exists(self.full_input_path, "Skeleton Step"):
+                self.logger.info("Extracting skeleton...")
+                extract_skeleton(self.full_input_path, self.output_folder, self.skeleton_file, self.topology_file, self.down_sample)
+            
+        # Step 2: Leaf Node Detection 
+        if self.run_leaf_nodes:
+            if self._check_file_exists(topology_file, "Skeleton-Topology Step"):
+                self.logger.info("Detecting leaf nodes...")
+                leaf_nodes_file = detect_leaf_nodes(topology_file, self.output_folder)
+            
+
+        # Step 3: Leaf Region Segmentation 
+        if self.run_leaf_region:
+            if self._check_file_exists(leaf_nodes_file, "Leaf Node Step"):
+                self.logger.info("Segmenting leaf regions...")
+                leaf_region_file, rest_region_file = segment_leaf_region(
+                    self.full_input_path, leaf_nodes_file, self.output_folder, self.radius
+                )
+            
+
+        # Step 4: Density Analysis 
+        if self.run_density_plot:
+            if self._check_file_exists(leaf_region_file, "Density Step"):
+                self.logger.info("Generating density plots and counting bifurcations...")
+                plot_leaf_density(leaf_region_file, rest_region_file, self.output_folder)
+                n_bif = count_bifurcations_from_ply(topology_file)
+                self.logger.info(f"Bifurcation count: {n_bif}")
+
+        self.logger.info("Pipeline execution finished successfully.")
+
+if __name__ == "__main__":
+    sapling_nerf = SaplingAnalysisPipeline()
+    sapling_nerf.run()
