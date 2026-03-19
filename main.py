@@ -108,11 +108,11 @@ class SaplingAnalysisPipeline:
                 segment_leaf_region(self.full_input_path, self.leaf_nodes_file, self.leaf_region_file, self.rest_region_file, self.radius)
 
         # Step 4: Density Analysis 
-        if self.run_density_plot:
-            if self._check_file_exists(leaf_region_file, "Density Step"):
+        if self.run_density_plot and self._check_file_exists(self.leaf_region_file, "Density Step") and self._check_file_exists(self.topology_file, "Density Step"):
                 self.logger.info("Generating density plots and counting bifurcations...")
-                plot_leaf_density(leaf_region_file, rest_region_file, self.output_folder)
-                n_bif = count_bifurcations_from_ply(topology_file)
+                lwr = plot_leaf_density(self.leaf_region_file, self.rest_region_file, self.output_folder)
+                self.logger.info(f"Leaf-Wood Ratio (LWR): {lwr}")
+                n_bif = count_bifurcations_from_ply(self.topology_file)
                 self.logger.info(f"Bifurcation count: {n_bif}")
 
         self.logger.info("Pipeline execution finished successfully.")

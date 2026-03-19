@@ -43,6 +43,7 @@ def count_bifurcations_from_ply(ply_path: str) -> int:
     - Treats the graph as undirected.
     - Self-loops (u == v) are ignored for degree counting.
     """
+
     p = Path(ply_path)
     if not p.exists():
         raise FileNotFoundError(f"PLY file not found: {p}")
@@ -78,6 +79,7 @@ def bifurcation_nodes_from_ply(ply_path: str) -> List[int]:
     """
     Return the list of node IDs whose degree is >= 3.
     """
+    
     p = Path(ply_path)
     if not p.exists():
         raise FileNotFoundError(f"PLY file not found: {p}")

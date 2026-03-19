@@ -11,6 +11,12 @@ from matplotlib.colors import Normalize
 from matplotlib import rcParams
 
 def plot_leaf_density(leaf_pcd_path, rest_region_path, output_path, num_bins=50):
+    """
+    Leaf-Wood distribution and ratio calculation.
+        - Inputs: paths to files.
+        - Outputs: leaf-wood distribution saved to file and leaf-wood ratio returned.
+    """
+
     # Load segmented leaf point cloud
     leaf_pcd = o3d.io.read_point_cloud(leaf_pcd_path)
     leaf_points = np.asarray(leaf_pcd.points)
@@ -25,7 +31,8 @@ def plot_leaf_density(leaf_pcd_path, rest_region_path, output_path, num_bins=50)
     if rest_points.size == 0:
         raise ValueError("Rest-region point cloud has no points.")
 
-    print(f"Leaf-Wood Ratio (LWR) = {leaf_points.size / rest_points.size}")
+    # Leaf-Wood Ratio (LWR)
+    lwr = leaf_points.size / rest_points.size
 
     # Extract Z coordinates (height) and rebase them so min across BOTH PCs is 0
     leaf_z = leaf_points[:, 2]
@@ -68,30 +75,30 @@ def plot_leaf_density(leaf_pcd_path, rest_region_path, output_path, num_bins=50)
     print(f"Saved KDE plot to: {kde_path}")
 
     # --- Plot B: Vertical heatmap (histogram along rebased Z) ---
-    counts, _ = np.histogram(z_coords, bins=num_bins)
-    heat = np.expand_dims(counts, axis=1)  # shape (bins, 1)
+    # counts, _ = np.histogram(z_coords, bins=num_bins)
+    # heat = np.expand_dims(counts, axis=1)  # shape (bins, 1)
 
-    plt.figure(figsize=(2, 8))
-    sns.heatmap(
-        heat[::-1],  # flip to match Z axis from bottom to top
-        cmap="YlGnBu",
-        cbar=True,
-        xticklabels=False,
-        yticklabels=False,
-        linewidths=0.5,
-        linecolor="gray"
-    )
-    plt.title("Vertical Leaf Heatmap (rebased)")
-    plt.tight_layout()
+    # plt.figure(figsize=(2, 8))
+    # sns.heatmap(
+    #     heat[::-1],  # flip to match Z axis from bottom to top
+    #     cmap="YlGnBu",
+    #     cbar=True,
+    #     xticklabels=False,
+    #     yticklabels=False,
+    #     linewidths=0.5,
+    #     linecolor="gray"
+    # )
+    # plt.title("Vertical Leaf Heatmap (rebased)")
+    # plt.tight_layout()
 
-    heatmap_path = os.path.join(
-        output_path,
-        f"leaf-density-heatmap-{os.path.basename(leaf_pcd_path).replace('.pcd', '.png')}"
-    )
-    plt.savefig(heatmap_path, dpi=150)
-    plt.close()
-    print(f"Saved heatmap to: {heatmap_path}")
+    # heatmap_path = os.path.join(
+    #     output_path,
+    #     f"leaf-density-heatmap-{os.path.basename(leaf_pcd_path).replace('.pcd', '.png')}"
+    # )
+    # plt.savefig(heatmap_path, dpi=150)
+    # plt.close()
+    # print(f"Saved heatmap to: {heatmap_path}")
 
-    return kde_path, heatmap_path
+    return lwr
 
 
