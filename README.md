@@ -7,7 +7,7 @@ This project contains a complete pipeline for structural analysis of sapling tre
 ## 📁 Project Structure
 
 ```
-saplings_nerf/               # Python module with analisys and segmentation functions
+sapling_nerf/               # Python module with analisys and segmentation functions
 ├── __init__.py
 ├── bifurcations.py
 ├── density_analysis.py

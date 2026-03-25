@@ -1,3 +1,3 @@
-# saplings_nerf/__init__.py
+# sapling_nerf/__init__.py
 
 # Empty init to make this a Python package

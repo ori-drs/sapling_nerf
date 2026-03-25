@@ -13,11 +13,11 @@ import os
 import sys
 import logging
 from datetime import datetime
-from saplings_nerf.skeleton_extraction import extract_skeleton
-from saplings_nerf.leaf_node_detection import detect_leaf_nodes
-from saplings_nerf.leaf_region_segmentation import segment_leaf_region
-from saplings_nerf.density_analysis import plot_leaf_density
-from saplings_nerf.bifurcations import count_bifurcations_from_ply
+from sapling_nerf.skeleton_extraction import extract_skeleton
+from sapling_nerf.leaf_node_detection import detect_leaf_nodes
+from sapling_nerf.leaf_region_segmentation import segment_leaf_region
+from sapling_nerf.density_analysis import plot_leaf_density
+from sapling_nerf.bifurcations import count_bifurcations_from_ply
 
 class SaplingAnalysisPipeline:
     def __init__(self, config_path="config/config.yaml"):

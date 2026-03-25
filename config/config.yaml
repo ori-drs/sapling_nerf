@@ -10,7 +10,7 @@ down_sample: 0.001 # Pc-skeletor parameter:
                    # 0.001 produce dense PC for overskeletonisation (segmentation purposes)
 radius: 0.012 # For leaf segmentation around terminal nodes
 
-run_skeleton: false
-run_leaf_nodes: false
-run_leaf_region: false
+run_skeleton: true
+run_leaf_nodes: true
+run_leaf_region: true
 run_density_plot: true
