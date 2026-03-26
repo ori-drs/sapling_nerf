@@ -3,6 +3,7 @@
 This project contains a complete pipeline for structural analysis of sapling trees. It handles skeleton extraction, leaf segmentation, and density and topology analysis. To avoid repeating processes when not necessary, the pipeline is divided into steps, generating files with predefined names in between. 
 
 We provide NeRF output [examples](https://drive.google.com/drive/folders/1IBCvfrhGg319DAw0-rJpB7IjInFra9oh?usp=sharing) to run this pipeline. Additionally, the dataset contains raw data and SfM-processed data to run your own NeRF/3DGS model.
+
 ---
 
 ## 📁 Project Structure
