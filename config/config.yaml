@@ -1,16 +1,14 @@
 input_folder: /home/miguelangel/oxford-lab/labrobotics/nerf-outputs/exports/pcd
 input_file: 2025-07-11-sapling-01.pcd
 
-# output_folder: /home/miguelangel/exports/output/sapling-01-december/
 output_folder: /home/miguelangel/oxford-lab/labrobotics/nerf-outputs/exports/output/test
 
+down_sample: 0.001      # Pc-skeletor parameter Downsampling for skeleton extraction: 
+                        # 0.008 produce downsampling for accurate skeleton extraction
+                        # 0.001 produce overskeletonisation (multiple terminal nodes in leaves) fo segmentation purposes
+radius: 0.012           # Radius for leaf segmentation around terminal nodes
 
-down_sample: 0.001 # Pc-skeletor parameter: 
-                   # 0.008 produce light PC for accurate skeleton 
-                   # 0.001 produce dense PC for overskeletonisation (segmentation purposes)
-radius: 0.012 # For leaf segmentation around terminal nodes
-
-run_skeleton: true
+run_skeleton: true      # Flags to activate each step
 run_leaf_nodes: true
 run_leaf_region: true
 run_density_plot: true

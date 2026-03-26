@@ -12,3 +12,4 @@ plyfile
 networkx
 seaborn
 pyyaml
+linuxpy
