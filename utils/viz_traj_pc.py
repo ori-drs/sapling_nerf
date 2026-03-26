@@ -1,6 +1,4 @@
 
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 Export camera frustums from transforms.json into a PLY where:
 - Cameras point "backwards" (i.e., along -Z) by default.
