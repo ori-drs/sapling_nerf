@@ -32,11 +32,11 @@ setup.py                     # Package installer
 sapling-xx/                              # Each data batch from sapling with id: xx is stored in a folder
 ├── processed/
     ├── input_nerf/                      # Input data used for NeRF training (3DGS will requiere points from SfM)
-    ├── output_colmap/                   # Output from COLMAP + Umeyama alignment, using data from the "raw/" folder
+    ├── output_colmap/                   # Output from COLMAP + Umeyama alignment (using data from the "raw/" folder)
     ├── output_nerf/                     # Examples of point clouds and videos generated from a NeRF model
 ├── raw/
     ├── images/cam1/                     # Camera images
-    ├── images/cam1-full/                # Optional folder with high frequency images
+    ├── images/cam1-full/                # Optional folder with camera images with high frequency
     ├── slam_poses_robotics.csv          # Reference trajectory to scale and localise recostructions (from multi-session SLAM)
 ```
 
