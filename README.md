@@ -2,7 +2,7 @@
 
 This project contains a complete pipeline for structural analysis of sapling trees. It handles skeleton extraction, leaf segmentation, and density and topology analysis. To avoid repeating processes when not necessary, the pipeline is divided into steps, generating files with predefined names in between. 
 
-We provide NeRF output [examples](https://drive.google.com/drive/folders/1IBCvfrhGg319DAw0-rJpB7IjInFra9oh?usp=sharing) to run this pipeline. Additionally, the dataset contains raw data and SfM-processed data to run your own NeRF/3DGS model.
+We provide NeRF output [examples](https://drive.google.com/drive/folders/1IBCvfrhGg319DAw0-rJpB7IjInFra9oh?usp=sharing) to run this pipeline. Additionally, the dataset contains raw data and SfM-processed data to run your own NeRF/3DGS model. [Project page here](https://dynamic.robots.ox.ac.uk/projects/sapling-nerf/).
 
 Example of sapling reconstruction using NeRF:
 <br><img src="images/saplings-01-02.png" width="500">
@@ -13,7 +13,7 @@ Results from Sapling-01 using Sapling-NeRF Analysis Pipeline:
 Results from Sapling-02 using Sapling-NeRF Analysis Pipeline:
 <br><img src="images/sapling-02-resul.png" width="1000">
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/q2g2WNdhyfA?si=zl2MCtbVsswKRBnm&amp;start=37" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+[![Sapling-NeRF](images/saplings-01-02.png)](https://www.youtube.com/embed/q2g2WNdhyfA?si=zl2MCtbVsswKRBnm&amp;start=37)
 
 ---
 
