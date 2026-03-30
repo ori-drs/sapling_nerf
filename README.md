@@ -4,6 +4,12 @@ This project contains a complete pipeline for structural analysis of sapling tre
 
 We provide NeRF output [examples](https://drive.google.com/drive/folders/1IBCvfrhGg319DAw0-rJpB7IjInFra9oh?usp=sharing) to run this pipeline. Additionally, the dataset contains raw data and SfM-processed data to run your own NeRF/3DGS model.
 
+<img src="images/saplings-01-02.png" width="500" style="display: block; margin: 0 auto;">
+
+<img src="images/sapling-01-resul.png" width="1000" style="display: block; margin: 0 auto;">
+
+<img src="images/sapling-02-resul.png" width="1000" style="display: block; margin: 0 auto;">
+
 ---
 
 ## 📁 Project Structure
