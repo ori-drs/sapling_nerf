@@ -13,7 +13,8 @@ Results from Sapling-01 using Sapling-NeRF Analysis Pipeline:
 Results from Sapling-02 using Sapling-NeRF Analysis Pipeline:
 <br><img src="images/sapling-02-resul.png" width="1000">
 
-[![Sapling-NeRF](images/saplings-01-02.png)](https://www.youtube.com/embed/q2g2WNdhyfA?si=zl2MCtbVsswKRBnm&amp;start=37)
+Animation: Results from Sapling-01 using Sapling-NeRF Analysis Pipeline:
+![hippo](images/animation.gif)
 
 ---
 
